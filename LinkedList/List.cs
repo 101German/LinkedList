@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace LinkedList
 
 
 
-    public  class List<T> where T:IComparable
+    public  class List<T>:IEnumerable<T> where T:IComparable
     {
         private Node<T> _head;
         private Node<T> _tail;
@@ -100,5 +101,19 @@ namespace LinkedList
             return false;
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)this).GetEnumerator();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            Node<T> current = _head;
+            while (current != null)
+            {
+                yield return current.data;
+                current = current.Next;
+            }
+        }
     }
 }
