@@ -22,7 +22,7 @@ namespace LinkedList
         }
 
     }
-    public class MyList<T> : IEnumerable<T> where T : IComparable
+    public class List<T> : IEnumerable<T> where T : IComparable
     {
         private Node<T> _head = null;
         private Node<T> _tail = null;
