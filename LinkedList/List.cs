@@ -16,6 +16,8 @@ namespace LinkedList
 
        public Node(T data)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
             this.data = data;
         }  
     
@@ -25,13 +27,70 @@ namespace LinkedList
 
     public  class List<T>:IEnumerable<T> where T:IComparable
     {
-        private Node<T> _head;
-        private Node<T> _tail;
-        public int Count { get; private set; }
-        public bool isEmpty { get { return Count == 0; } }
+        private Node<T> _head = null;
+        private Node<T> _tail = null;
+        private int _count = 0;
+       
+        public bool isEmpty { get { return _count == 0; } }
+
+        public T this[int index]
+        {
+            get
+            {
+                var current = _head;
+                int count = 0;
+                if (_head == null)
+                    throw new NullReferenceException();
+
+                if(index>_count)
+                    throw new ArgumentOutOfRangeException();
 
 
-        
+
+                while (current != null && count != index)
+                {
+                   
+
+                    current = current.Next;
+                    count++;
+
+                    
+
+
+                }
+               
+                    return current.data;
+
+            }
+            set
+            {
+                var current = _head;
+                int count = 0;
+                if (_head == null)
+                    throw new NullReferenceException();
+
+                if (index > _count)
+                    throw new ArgumentOutOfRangeException();
+
+
+
+                while (current != null && count != index)
+                {
+
+
+                    current = current.Next;
+                    count++;
+
+
+
+
+                }
+
+                current.data = value;
+
+            }
+        }
+
         public void Add(T data)
         {
             Node<T> node = new Node<T>(data);
@@ -44,18 +103,19 @@ namespace LinkedList
             {
                 _tail.Next = node;
                 _tail = node;
-                ++Count;
+                ++_count;
             }
         }
 
-        public bool Delete(T data)
+        public void Delete(int index)
         {
             Node<T> current = _head;
             Node<T> previous = null;
+            int count = 0;
 
-            while (current!= null)
+            while (current!= null && count != index)
             {
-                if (current.data.Equals(data))
+                if (count == index)
                 {
                     if (previous != null)
                     {
@@ -74,8 +134,8 @@ namespace LinkedList
                             _tail = _head;
                     }
 
-                    --Count;
-                    return true;
+                    --_count;
+                    return ;
                 }
 
                 previous = current;
@@ -84,7 +144,7 @@ namespace LinkedList
 
 
             }
-            return false;
+            throw new ArgumentOutOfRangeException();
         }
 
         public bool Contains(T data)
@@ -99,6 +159,11 @@ namespace LinkedList
                 node = node.Next;
             }
             return false;
+        }
+
+        public int Count()
+        {
+            return _count;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
