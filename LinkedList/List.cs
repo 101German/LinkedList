@@ -107,7 +107,7 @@ namespace LinkedList
             }
         }
 
-        public void Delete(int index)
+        public void remove_at(int index)
         {
             Node<T> current = _head;
             Node<T> previous = null;
