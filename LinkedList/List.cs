@@ -8,29 +8,26 @@ using System.Threading.Tasks;
 namespace LinkedList
 {
 
-    public class Node<T> where T : IComparable 
+    public class Node<T> where T : IComparable
     {
-       public Node<T> Next;
-                     
-       public T data;
+        public Node<T> Next;
 
-       public Node(T data)
+        public T data;
+
+        public Node(T data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
             this.data = data;
-        }  
-    
+        }
+
     }
-
-
-
-    public  class List<T>:IEnumerable<T> where T:IComparable
+    public class MyList<T> : IEnumerable<T> where T : IComparable
     {
         private Node<T> _head = null;
         private Node<T> _tail = null;
         private int _count = 0;
-       
+
         public bool isEmpty { get { return _count == 0; } }
 
         public T this[int index]
@@ -42,24 +39,18 @@ namespace LinkedList
                 if (_head == null)
                     throw new NullReferenceException();
 
-                if(index>_count)
+                if (index > _count)
                     throw new ArgumentOutOfRangeException();
 
 
 
-                while (current != null && count != index)
+                while (count != index)
                 {
-                   
-
                     current = current.Next;
                     count++;
-
-                    
-
-
                 }
-               
-                    return current.data;
+
+                return current.data;
 
             }
             set
@@ -69,21 +60,15 @@ namespace LinkedList
                 if (_head == null)
                     throw new NullReferenceException();
 
-                if (index > _count)
+                if (index >= _count)
                     throw new ArgumentOutOfRangeException();
 
 
 
-                while (current != null && count != index)
+                while (count != index)
                 {
-
-
                     current = current.Next;
                     count++;
-
-
-
-
                 }
 
                 current.data = value;
@@ -95,7 +80,7 @@ namespace LinkedList
         {
             Node<T> node = new Node<T>(data);
 
-            if(_head == null)
+            if (_head == null)
             {
                 _head = _tail = node;
             }
@@ -103,8 +88,10 @@ namespace LinkedList
             {
                 _tail.Next = node;
                 _tail = node;
-                ++_count;
+
             }
+
+            ++_count;
         }
 
         public void remove_at(int index)
@@ -113,8 +100,9 @@ namespace LinkedList
             Node<T> previous = null;
             int count = 0;
 
-            while (current!= null && count != index)
+            while (current != null)
             {
+
                 if (count == index)
                 {
                     if (previous != null)
@@ -125,7 +113,7 @@ namespace LinkedList
                             _tail = previous;
                     }
 
-                    
+
                     else
                     {
                         _head = _head.Next;
@@ -135,22 +123,22 @@ namespace LinkedList
                     }
 
                     --_count;
-                    return ;
+                    return;
                 }
 
                 previous = current;
                 current = current.Next;
-                
+                count++;
 
 
             }
-            throw new ArgumentOutOfRangeException();
+
         }
 
         public bool Contains(T data)
         {
             Node<T> node = _head;
-            while (node!=null)
+            while (node != null)
             {
                 if (node.data.Equals(data))
                 {
