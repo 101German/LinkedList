@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LinkedList
 {
@@ -167,6 +165,18 @@ namespace LinkedList
                 yield return current.data;
                 current = current.Next;
             }
+        }
+        public T[] ToArray()
+        {
+            var current = _head;
+            T[] array = new T[_count];
+            for(int i = 0; i < _count; i++)
+            {
+                array[i] = current.data;
+                current = current.Next;
+            }
+
+            return array;
         }
     }
 }
